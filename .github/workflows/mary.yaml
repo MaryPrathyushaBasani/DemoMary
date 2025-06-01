@@ -10,22 +10,14 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-
+      
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
-      - name: Remove BOM from main.py
-        run: sed -i '1s/^\xef\xbb\xbf//' main.py
-
       - name: Install dependencies
-        run: |
-          if [ -f requirements.txt ]; then
-            pip install -r requirements.txt
-          else
-            echo "No requirements.txt file found, skipping dependency installation."
-          fi
+        run: pip install -r requirements.txt || echo "No requirements.txt file"
 
       - name: Run Python Script
         run: python main.py
